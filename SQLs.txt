@@ -1,0 +1,3 @@
+SQL queries:
+
+CREATE DATABASE credit_db;
