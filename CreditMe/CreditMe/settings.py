@@ -78,7 +78,7 @@ DATABASES = {
         # If you are using Cloud SQL for MySQL rather than PostgreSQL, set
         # 'ENGINE': 'django.db.backends.mysql' instead of the following.
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dmgtproject:us-central1:dmgt-mysql',
+        'NAME': 'credit_me',
         'USER': 'root',
         'PASSWORD': 'LYH0527lyh',
         'HOST': '35.193.119.93',
