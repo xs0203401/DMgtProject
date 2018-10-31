@@ -82,6 +82,7 @@ DATABASES = {
         'NAME': 'CreditMe',
         'USER': 'root',
         'PASSWORD': 'LYH0527lyh',
+        'HOST': '35.193.119.93',
         # For MySQL, set 'PORT': '3306' instead of the following. Any Cloud
         # SQL Proxy instances running locally must also be set to tcp:3306.
         'PORT': '3306'
