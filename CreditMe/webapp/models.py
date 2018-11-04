@@ -19,12 +19,12 @@ class Redemption(models.Model):
 class Message(models.Model):
 	title = models.CharField(max_length=80)
 	content = models.CharField(max_length=240)
-	
+
 class Transaction(models.Model):
 	rec_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	points = models.IntegerField(default=0)
 	message = models.ForeignKey(Message, on_delete=models.CASCADE)
-	rdm_ID = model.ForeignKey(Redemption, on_delete=models.CASCADE)
+	rdm_ID = models.ForeignKey(Redemption, on_delete=models.CASCADE)
 	pub_date = models.DateTimeField('transaction date stamp')
 
