@@ -25,6 +25,6 @@ class Transaction(models.Model):
 	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='sender')
 	points = models.IntegerField(default=0)
 	message = models.ForeignKey(Message, on_delete=models.CASCADE)
-	rdm_ID = models.ForeignKey(Redemption, on_delete=models.CASCADE)
+	rdm_ID = models.ForeignKey(Redemption, on_delete=models.CASCADE, blank=True, null=True)
 	pub_date = models.DateTimeField('transaction date stamp')
 
