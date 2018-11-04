@@ -12,7 +12,14 @@ class Employee(models.Model):
     username = models.CharField(max_length=16)
     password = models.CharField(max_length=128)
 
+class Redemption(models.Model):
+	point_price = models.IntegerField(default=100)
+	title = models.CharField(max_length=64)
 
+class Message(models.Model):
+	title = models.CharField(max_length=80)
+	content = models.CharField(max_length=240)
+	
 class Transaction(models.Model):
 	rec_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -21,10 +28,3 @@ class Transaction(models.Model):
 	rdm_ID = model.ForeignKey(Redemption, on_delete=models.CASCADE)
 	pub_date = models.DateTimeField('transaction date stamp')
 
-class Redemption(models.Model):
-	point_price = models.IntegerField(default=100)
-	title = models.CharField(max_length=64)
-
-class Message(models.Model):
-	title = models.CharField(max_length=80)
-	content = models.CharField(max_length=240)
