@@ -21,8 +21,8 @@ class Message(models.Model):
 	content = models.CharField(max_length=240)
 
 class Transaction(models.Model):
-	rec_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
-	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
+	rec_ID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='receiver')
+	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='sender')
 	points = models.IntegerField(default=0)
 	message = models.ForeignKey(Message, on_delete=models.CASCADE)
 	rdm_ID = models.ForeignKey(Redemption, on_delete=models.CASCADE)
