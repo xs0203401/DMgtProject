@@ -14,11 +14,11 @@ class Employee(models.Model):
 
 
 class Transaction(models.Model):
-	rec_ID = models.ForeignKey(Employee)
-	send_ID = models.ForeignKey(Employee)
+	rec_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
+	send_ID = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	points = models.IntegerField(default=0)
-	message = models.ForeignKey(Message)
-	rdm_ID = model.ForeignKey(Redemption)
+	message = models.ForeignKey(Message, on_delete=models.CASCADE)
+	rdm_ID = model.ForeignKey(Redemption, on_delete=models.CASCADE)
 	pub_date = models.DateTimeField('transaction date stamp')
 
 class Redemption(models.Model):
