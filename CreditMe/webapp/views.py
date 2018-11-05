@@ -3,6 +3,7 @@ from django.shortcuts import render
 import datetime
 
 # Create your views here.
+@login_required(redirect_field_name='login/')
 def index(request):
 	return render(request, 'webapp/home.html')
 
