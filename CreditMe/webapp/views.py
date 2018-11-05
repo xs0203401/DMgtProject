@@ -39,7 +39,7 @@ def send(request):
 		# duv2kmqNER4GzLDg7JoLkJVYlmebSMlafT'], 'msg_title': ['yttt'], 'points': ['15'], 'rec_user': [
 		# 'henryliu']}>
 		# print(request.POST)
-		rec_user = User.objects.get(username=request.POST['rec_user'])
+		rec_user = User.objects.get(pk=request.POST['rec_user'])
 		rec_employee = Employee.objects.get(user_id=rec_user)
 		this_user = request.user
 		send_employee = Employee.objects.get(user_id=this_user)
@@ -79,7 +79,23 @@ def redemption(request):
 		# <QueryDict: {'rdp_id': ['1'], 'csrfmiddlewaretoken': ['bWtXhAUY4nNf3WT7ZWLX3QpTRZM9439bXll
 		# eAGdxcZun7pQUlXhgFW7rBLNoz4bA']}>
 		# print(request.POST)
-		return HttpResponse('not yet')
+		sys_employee = Employee.objects.get(pk=6) # system pk=6
+		this_user = request.user
+		this_employee = Employee.objects.get(user_id=this_user)
+		trans_msg = Message(
+			title=str(request.POST['msg_title']),
+			content=str(request.POST['msg_content'])
+			)
+		trans_msg.save()
+		this_trans=Transaction(
+			rec_ID=sys_employee,
+			send_ID=this_employee,
+			points=int(),
+			message=trans_msg,
+			pub_date=timezone.now()
+			)
+		this_trans.save()
+		return redirect('/redemption')
 
 	elif request.method == 'GET':
 
