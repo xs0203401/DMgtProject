@@ -9,7 +9,6 @@ from .models import Employee, Redemption, Message, Transaction
 from datetime import datetime
 
 
-
 # Create your views here.
 def logout_view(request):
     logout(request)
