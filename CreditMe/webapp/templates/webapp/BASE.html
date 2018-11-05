@@ -17,9 +17,9 @@
     <title>CreditMe - {% block title %}{% endblock %}</title>
   </head>
   <body>
-    <h1>Welcome to CreditMe</h1>
+  {% include 'webapp/nav.html' %}
+  <h1>Welcome to CreditMe</h1>
 	<hr>
-	{% include 'webapp/nav.html' %}
 	<div class="container">	
 	{% block content %}{% endblock %}
 	</div>
