@@ -4,7 +4,7 @@
 <h3>Today is: {{ datetime }}</h3>
 <div class="row">
 	{% include 'webapp/profile.html' %}
-	{% if request.GET['done'] %}
+	{% if request.GET.done %}
 	<h1>Success!</h1>
 	{% endif %}
 	<div class="col-md-8">
