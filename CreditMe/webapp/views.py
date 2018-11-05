@@ -37,18 +37,18 @@ def send(request):
 		return HttpResponse('not yet')
 	else:
 		
-	this_user, this_employee = get_this_user_employee(request)
-	# exclude system pk=6
-	# exclude this employee's pk.id
-	employees = Employee.objects.exclude(pk=6).exclude(pk=this_employee.id)
-	
-	context = {
-        'user': this_user,
-        'employee': this_employee,
-        'datetime': timezone.now().date(),
-        'employees': employees,
-    }
-	return render(request, 'webapp/send.html', context)
+		this_user, this_employee = get_this_user_employee(request)
+		# exclude system pk=6
+		# exclude this employee's pk.id
+		employees = Employee.objects.exclude(pk=6).exclude(pk=this_employee.id)
+		
+		context = {
+	        'user': this_user,
+	        'employee': this_employee,
+	        'datetime': timezone.now().date(),
+	        'employees': employees,
+	    }
+		return render(request, 'webapp/send.html', context)
 
 @login_required(login_url='login/')
 def redemption(request):
@@ -56,14 +56,14 @@ def redemption(request):
 		return HttpResponse('not yet')
 	else:
 
-	this_user, this_employee = get_this_user_employee(request)
+		this_user, this_employee = get_this_user_employee(request)
 
-	rdp_options = Redemption.objects.all()
+		rdp_options = Redemption.objects.all()
 
-	context = {
-        'user': this_user,
-        'employee': this_employee,
-        'datetime': timezone.now().date(),
-        'rdp_options': rdp_options,
-    }
-	return render(request, 'webapp/redemption.html', context)
+		context = {
+	        'user': this_user,
+	        'employee': this_employee,
+	        'datetime': timezone.now().date(),
+	        'rdp_options': rdp_options,
+	    }
+		return render(request, 'webapp/redemption.html', context)
