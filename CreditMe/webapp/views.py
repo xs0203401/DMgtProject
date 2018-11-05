@@ -57,7 +57,7 @@ def send(request):
 			trans_msg.save()
 			this_trans.message=trans_msg
 		this_trans.save()
-		return redirect('/send')
+		return redirect('/send?done=True')
 
 	elif request.method == 'GET':
 
@@ -92,7 +92,7 @@ def redemption(request):
 			pub_date=timezone.now()
 			)
 		this_trans.save()
-		return redirect('/redemption')
+		return redirect('/redemption?done=True')
 
 	elif request.method == 'GET':
 
