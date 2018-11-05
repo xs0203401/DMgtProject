@@ -38,7 +38,7 @@ def send(request):
 	# exclude system pk=6
 	employees = Employee.objects.exclude(pk=6) \
 	#exclude this employee's pk.id
-		.exclude(pk=this_employee.id)
+	.exclude(pk=this_employee.id)
 
 
 	context = {
