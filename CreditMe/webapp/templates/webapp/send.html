@@ -5,7 +5,7 @@
 <div class="row">
 	{% include 'webapp/profile.html' %}
 	<div class="col-md-8">
-		<form>
+		<form action="/send" method="POST" enctype="multipart/form-data">
 		  <div class="form-group row">
 		    <label for="points" class="col-sm-2 col-form-label">Points</label>
 		    <div class="col-sm-10">
@@ -28,7 +28,7 @@
 		    <label for="msg_content">Message Content</label>
 		    <textarea class="form-control" id="msg_content" name="msg_content" rows="3" placeholder="(Optional)"></textarea>
 		  </div>
-  		  <button type="submit" class="btn btn-primary">Submit</button>
+  		  <button type="submit" class="btn btn-primary">Send</button>
 		</form>
 	</div>
 </div>

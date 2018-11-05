@@ -1,0 +1,21 @@
+{% extends "webapp/BASE.html" %}
+{% block title %}Send Points{% endblock %}
+{% block content %}
+<h3>Today is: {{ datetime }}</h3>
+<div class="row">
+	{% include 'webapp/profile.html' %}
+	<div class="col-md-8">
+		<form action="/redemption" method="POST" enctype="multipart/form-data">
+		  <div class="form-group row">
+		    <label for="rec_user">Select your redemption</label>
+		    <select class="form-control" id="rec_user" name="rec_user">
+	            {% for r in rdp_options %}
+	            <option value="{{ r.id }}">{{ r.title }} - {{ r.point_price }} pt.</option>
+	            {% endfor %}
+		    </select>
+		  </div>
+  		  <button type="submit" class="btn btn-primary">Redeem</button>
+		</form>
+	</div>
+</div>
+{% endblock %}
