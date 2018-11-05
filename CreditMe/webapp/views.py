@@ -36,11 +36,9 @@ def index(request):
 def send(request):
 	this_user, this_employee = get_this_user_employee(request)
 	# exclude system pk=6
-	employees = Employee.objects.exclude(pk=6) \
-	#exclude this employee's pk.id
-	.exclude(pk=this_employee.id)
-
-
+	# exclude this employee's pk.id
+	employees = Employee.objects.exclude(pk=6).exclude(pk=this_employee.id)
+	
 	context = {
         'user': this_user,
         'employee': this_employee,
