@@ -15,9 +15,9 @@
 		  <div class="form-group">
 		    <label for="rec_user">Select Receiver</label>
 		    <select class="form-control" id="rec_user" name="rec_user">
-	            {% for e in employees -%}
+	            {% for e in employees %}
 	            <option value="{{ e.user_id }}">{{ e.firstname }} {{ e.lastname }}</option>
-	            {% endfor -%}
+	            {% endfor %}
 		    </select>
 		  </div>
 		  <div class="form-group">
