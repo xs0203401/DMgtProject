@@ -34,7 +34,8 @@ def index(request):
 @login_required(login_url='login/')
 def send(request):
 	if request.method == 'POST':
-		return HttpResponse(str(request.POST))
+	# <querydict: {'csrfmiddlewaretoken':="" ['e7wejr2apxvvwmsnqdtzirbgvaxn49bs0wov2xljx9c3appamezsuxjefmy2zadh'],="" 'points':="" ['5'],="" 'rec_user':="" ['henryliu'],="" 'msg_title':="" ['hhhh'],="" 'msg_content':="" ['1r1r1']}="">
+		return HttpResponse(request.POST['points'])
 	elif request.method == 'GET':
 
 		this_user, this_employee = get_this_user_employee(request)
