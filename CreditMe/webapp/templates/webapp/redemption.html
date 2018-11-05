@@ -8,8 +8,8 @@
 		<form action="/redemption/" method="POST" enctype="multipart/form-data">
 			{% csrf_token %} 
 		  <div class="form-group row">
-		    <label for="rec_user">Select your redemption</label>
-		    <select class="form-control" id="rec_user" name="rec_user">
+		    <label for="rdp_id">Select your redemption</label>
+		    <select class="form-control" id="rdp_id" name="rdp_id">
 	            {% for r in rdp_options %}
 	            <option value="{{ r.id }}">{{ r.title }} - {{ r.point_price }} pt.</option>
 	            {% endfor %}

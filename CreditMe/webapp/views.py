@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from django.utils import timezone
 
 from .models import Employee, Redemption, Message, Transaction
+from django.contrib.auth.models import User
 
 from datetime import datetime
 
@@ -38,7 +39,25 @@ def send(request):
 		# duv2kmqNER4GzLDg7JoLkJVYlmebSMlafT'], 'msg_title': ['yttt'], 'points': ['15'], 'rec_user': [
 		# 'henryliu']}>
 		# print(request.POST)
-		return HttpResponse(request.POST['points'])
+		rec_user = User.objects.get(username=request.POST['rec_user'])
+		rec_employee = Employee.objects.get(user_id=rec_user)
+		this_user = request.user
+		send_employee = Employee.objects.get(user_id=this_user)
+		trans_msg = Message(
+			title=str(request.POST['msg_title']),
+			content=str(request.POST['msg_content'])
+			)
+		trans_msg.save()
+		this_trans=Transaction(
+			rec_ID=rec_employee,
+			send_ID=send_employee,
+			points=int(request.POST['points']),
+			message=trans_msg,
+			pub_date=timezone.now()
+			)
+		this_trans.save()
+		return redirect('/send')
+
 	elif request.method == 'GET':
 
 		this_user, this_employee = get_this_user_employee(request)
@@ -57,8 +76,11 @@ def send(request):
 @login_required(login_url='login/')
 def redemption(request):
 	if request.method == 'POST':
-		print(request.POST)
+		# <QueryDict: {'rdp_id': ['1'], 'csrfmiddlewaretoken': ['bWtXhAUY4nNf3WT7ZWLX3QpTRZM9439bXll
+		# eAGdxcZun7pQUlXhgFW7rBLNoz4bA']}>
+		# print(request.POST)
 		return HttpResponse('not yet')
+
 	elif request.method == 'GET':
 
 		this_user, this_employee = get_this_user_employee(request)
