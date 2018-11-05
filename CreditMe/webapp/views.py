@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.utils import timezone
 
 from .models import Employee, Redemption, Message, Transaction
 
@@ -16,6 +17,8 @@ def index(request):
 	context = {
         'user': this_user,
         'employee': this_employee,
+        'datetime': datetime.now(),
+        'timezoned': timezone.now(),
     }
 	return render(request, 'webapp/home.html', context)
 

@@ -1,7 +1,7 @@
 {% extends "webapp/BASE.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<h4><b>{{ user.username }}</b> - <a href='/logout'>Log out</a></h4>
+<h4>Today is: {{ datetime }} | {{ timezoned }}<b>{{ user.username }}</b> - <a href='/logout'>Log out</a></h4>
 <ul class="list-group">
   <li class="list-group-item active d-flex justify-content-between align-items-center">
     My Profile - {{ employee.first_name }} {{ employee.last_name}}
