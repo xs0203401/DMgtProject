@@ -6,6 +6,7 @@
 	{% include 'webapp/profile.html' %}
 	<div class="col-md-8">
 		<form action="/redemption/" method="POST" enctype="multipart/form-data">
+			{% csrf_token %} 
 		  <div class="form-group row">
 		    <label for="rec_user">Select your redemption</label>
 		    <select class="form-control" id="rec_user" name="rec_user">
