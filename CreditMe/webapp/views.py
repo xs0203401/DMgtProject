@@ -10,4 +10,7 @@ def index(request):
 	return render(request, 'webapp/home.html')
 
 def login(request):
-	return render(request, 'webapp/login.html')
+	if request.user.is_authenticated:
+		return redirect('/')
+	else:
+		return HttpResponse("hello")
