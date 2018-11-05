@@ -9,15 +9,16 @@ from .models import Employee, Redemption, Message, Transaction
 from datetime import datetime
 
 
+def get_this_user_employee(request):
+	this_user = request.user
+	this_employee = Employee.objects.get(user_id=this_user)
+	datetime.now().date()
+	return this_user, this_employee
+
 # Create your views here.
 def logout_view(request):
     logout(request)
     return redirect('/')
-
-def get_this_user_employee(request):
-	this_user = request.user
-	this_employee = Employee.objects.get(user_id=this_user)
-	return this_user, this_employee
 
 @login_required(login_url='login/')
 def index(request):
