@@ -34,9 +34,9 @@ def index(request):
 @login_required(login_url='login/')
 def send(request):
 	if request.method == 'POST':
-		return HttpResponse('not yet')
-	else:
-		
+		return HttpResponse(request.POST)
+	elif request.method == 'GET':
+
 		this_user, this_employee = get_this_user_employee(request)
 		# exclude system pk=6
 		# exclude this employee's pk.id
@@ -54,7 +54,7 @@ def send(request):
 def redemption(request):
 	if request.method == 'POST':
 		return HttpResponse('not yet')
-	else:
+	elif request.method == 'GET':
 
 		this_user, this_employee = get_this_user_employee(request)
 
