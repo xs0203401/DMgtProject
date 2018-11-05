@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from .models import Employee, Redemption, Message, Transaction
 
-import datetime
+from datetime import datetime
 
 # Create your views here.
 @login_required(login_url='login/')
