@@ -34,8 +34,10 @@ def index(request):
 @login_required(login_url='login/')
 def send(request):
 	if request.method == 'POST':
-		# <querydict: {'csrfmiddlewaretoken':="" ['e7wejr2apxvvwmsnqdtzirbgvaxn49bs0wov2xljx9c3appamezsuxjefmy2zadh'],="" 'points':="" ['5'],="" 'rec_user':="" ['henryliu'],="" 'msg_title':="" ['hhhh'],="" 'msg_content':="" ['1r1r1']}="">
-		print(request.POST)
+		# <QueryDict: {'msg_content': ['ccc'], 'csrfmiddlewaretoken': ['JDs57HliW4SDzNaW2KOqjSDOupRxQ9
+		# duv2kmqNER4GzLDg7JoLkJVYlmebSMlafT'], 'msg_title': ['yttt'], 'points': ['15'], 'rec_user': [
+		# 'henryliu']}>
+		# print(request.POST)
 		return HttpResponse(request.POST['points'])
 	elif request.method == 'GET':
 
@@ -55,6 +57,7 @@ def send(request):
 @login_required(login_url='login/')
 def redemption(request):
 	if request.method == 'POST':
+		print(request.POST)
 		return HttpResponse('not yet')
 	elif request.method == 'GET':
 
