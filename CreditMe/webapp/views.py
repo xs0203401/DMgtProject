@@ -8,6 +8,8 @@ from .models import Employee, Redemption, Message, Transaction
 
 from datetime import datetime
 
+
+
 # Create your views here.
 def logout_view(request):
     logout(request)
@@ -39,7 +41,7 @@ def send(request):
 	context = {
         'user': this_user,
         'employee': this_employee,
-        'employees': employees,
         'datetime': timezone.now().date(),
+        'employees': employees,
     }
 	return render(request, 'webapp/send.html', context)
