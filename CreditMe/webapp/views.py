@@ -9,7 +9,7 @@ import datetime
 def index(request):
 	this_user = request.user
 
-	this_employee = 
+	# this_employee = 
 
 	context = {
         'question': question,
