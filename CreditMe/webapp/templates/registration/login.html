@@ -2,9 +2,7 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 <div class="login-popup-wrap new_login_popup"> 
-	<div class="login-popup-heading text-center">
-		<h4><i class="fa fa-lock" aria-hidden="true"></i> Login </h4>                        
-	</div>
+	<h4> Login </h4>
 	<form id="loginMember" role="form" action="" method="post">
 	  {% csrf_token %}
 	  {{ form.as_p }}
