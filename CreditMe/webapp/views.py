@@ -34,7 +34,7 @@ def index(request):
 @login_required(login_url='login/')
 def send(request):
 	if request.method == 'POST':
-		return HttpResponse(request.POST)
+		return HttpResponse(str(request.POST))
 	elif request.method == 'GET':
 
 		this_user, this_employee = get_this_user_employee(request)
