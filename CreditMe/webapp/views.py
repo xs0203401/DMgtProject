@@ -20,7 +20,7 @@ def logout_view(request):
     logout(request)
     return redirect('/')
 
-@login_required(login_url='login/')
+@login_required(login_url='/login/')
 def index(request):
 	this_user, this_employee = get_this_user_employee(request)
 
@@ -32,29 +32,30 @@ def index(request):
 	return render(request, 'webapp/home.html', context)
 
 
-@login_required(login_url='login/')
+@login_required(login_url='/login/')
 def send(request):
 	if request.method == 'POST':
 		# <QueryDict: {'msg_content': ['ccc'], 'csrfmiddlewaretoken': ['JDs57HliW4SDzNaW2KOqjSDOupRxQ9
 		# duv2kmqNER4GzLDg7JoLkJVYlmebSMlafT'], 'msg_title': ['yttt'], 'points': ['15'], 'rec_user': [
 		# 'henryliu']}>
 		# print(request.POST)
-		rec_user = User.objects.get(pk=request.POST['rec_user'])
+		rec_user = User.objects.get(pk=int(request.POST['rec_user']))
 		rec_employee = Employee.objects.get(user_id=rec_user)
 		this_user = request.user
 		send_employee = Employee.objects.get(user_id=this_user)
-		trans_msg = Message(
-			title=str(request.POST['msg_title']),
-			content=str(request.POST['msg_content'])
-			)
-		trans_msg.save()
 		this_trans=Transaction(
 			rec_ID=rec_employee,
 			send_ID=send_employee,
 			points=int(request.POST['points']),
-			message=trans_msg,
 			pub_date=timezone.now()
 			)
+		if request.POST['msg_title']!='' or request.POST['msg_content']!='':
+			trans_msg = Message(
+				title=str(request.POST['msg_title']),
+				content=str(request.POST['msg_content'])
+				)
+			trans_msg.save()
+			this_trans.message=trans_msg
 		this_trans.save()
 		return redirect('/send')
 
@@ -73,7 +74,7 @@ def send(request):
 	    }
 		return render(request, 'webapp/send.html', context)
 
-@login_required(login_url='login/')
+@login_required(login_url='/login/')
 def redemption(request):
 	if request.method == 'POST':
 		# <QueryDict: {'rdp_id': ['1'], 'csrfmiddlewaretoken': ['bWtXhAUY4nNf3WT7ZWLX3QpTRZM9439bXll
@@ -82,16 +83,12 @@ def redemption(request):
 		sys_employee = Employee.objects.get(pk=6) # system pk=6
 		this_user = request.user
 		this_employee = Employee.objects.get(user_id=this_user)
-		trans_msg = Message(
-			title=str(request.POST['msg_title']),
-			content=str(request.POST['msg_content'])
-			)
-		trans_msg.save()
+		rdp_item = Redemption.objects.get(pk=int(request.POST['rdp_id']))
 		this_trans=Transaction(
 			rec_ID=sys_employee,
 			send_ID=this_employee,
-			points=int(),
-			message=trans_msg,
+			points=int(rdp_item.point_price),
+			rdm_ID=rdp_item,
 			pub_date=timezone.now()
 			)
 		this_trans.save()
