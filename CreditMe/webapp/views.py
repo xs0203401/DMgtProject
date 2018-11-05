@@ -45,3 +45,17 @@ def send(request):
         'employees': employees,
     }
 	return render(request, 'webapp/send.html', context)
+
+@login_required(login_url='login/')
+def redemption(request):
+	this_user, this_employee = get_this_user_employee(request)
+
+	rdp_options = Redemption.objects.all()
+
+	context = {
+        'user': this_user,
+        'employee': this_employee,
+        'datetime': timezone.now().date(),
+        'rdp_options': rdp_options,
+    }
+	return render(request, 'webapp/redemption.html', context)
