@@ -1,0 +1,23 @@
+<h5> <b><i>{{ user.username }}</i></b> | <a href='/logout'>Log out</a></h5>
+<div class="col-md-4">
+  <ul class="list-group">
+    <li class="list-group-item active d-flex justify-content-between align-items-center">
+      My Profile - {{ employee.first_name }} {{ employee.last_name}}
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Email: {{ employee.email }}
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Received Points:
+      <span class="badge badge-primary badge-pill"> {{ employee.point_recd }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Available To Send:
+      <span class="badge badge-primary badge-pill"> {{ employee.point_tosd }}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Dapibus ac facilisis in
+      <span class="badge badge-primary badge-pill">2</span>
+    </li>
+  </ul>
+</div>

@@ -33,7 +33,7 @@ def index(request):
 @login_required(login_url='login/')
 def send(request):
 	this_user, this_employee = get_this_user_employee(request)
-	employees = Employee.objects.exclude(pk=e1.id)
+	employees = Employee.objects.exclude(pk=this_employee.id)
 
 
 	context = {
