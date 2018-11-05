@@ -16,24 +16,19 @@
 		    <label for="rec_user">Select Receiver</label>
 		    <select class="form-control" id="rec_user" name="rec_user">
 	            {% for e in employees %}
-	            <option value="{{ e.user_id }}">{{ e.firstname }} {{ e.lastname }}</option>
+	            <option value="{{ e.user_id }}">{{ e.first_name }} {{ e.last_name }}</option>
 	            {% endfor %}
 		    </select>
 		  </div>
 		  <div class="form-group">
-		    <label for="exampleFormControlSelect2">Example multiple select</label>
-		    <select multiple class="form-control" id="exampleFormControlSelect2">
-		      <option>1</option>
-		      <option>2</option>
-		      <option>3</option>
-		      <option>4</option>
-		      <option>5</option>
-		    </select>
+		    <label for="msg_title">Message Title</label>
+		    <textarea class="form-control" id="msg_title" name="msg_title" placeholder="(Optional)"></textarea>
 		  </div>
 		  <div class="form-group">
-		    <label for="exampleFormControlTextarea1">Example textarea</label>
-		    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+		    <label for="msg_content">Message Content</label>
+		    <textarea class="form-control" id="msg_content" name="msg_content" rows="3" placeholder="(Optional)"></textarea>
 		  </div>
+  		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
 </div>
