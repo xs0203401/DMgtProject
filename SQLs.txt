@@ -27,3 +27,11 @@ ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_send_ID_id_9
 COMMIT;
 
 
+BEGIN;
+--
+-- Alter field rdm_ID on transaction
+--
+ALTER TABLE `webapp_transaction` DROP FOREIGN KEY `webapp_transaction_rdm_ID_id_3ec42ff3_fk_webapp_redemption_id`;
+ALTER TABLE `webapp_transaction` MODIFY `rdm_ID_id` integer NULL;
+ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_rdm_ID_id_3ec42ff3_fk_webapp_redemption_id` FOREIGN KEY (`rdm_ID_id`) REFERENCES `webapp_redemption` (`id`);
+COMMIT;
