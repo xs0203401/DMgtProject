@@ -11,7 +11,8 @@ def index(request):
 	this_user = request.user
 	print(this_user.id)
 	print(this_user)
-	# this_employee = Employee.
+	this_employee = Employee.objects.get(user_id=this_user)
+	print(this_employee.first_name)
 
 	context = {
         # 'question': question,
