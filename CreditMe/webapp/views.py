@@ -33,6 +33,10 @@ def index(request):
 
 @login_required(login_url='login/')
 def send(request):
+	if request.method == 'POST':
+		return HttpResponse('not yet')
+	else:
+		
 	this_user, this_employee = get_this_user_employee(request)
 	# exclude system pk=6
 	# exclude this employee's pk.id
@@ -48,6 +52,10 @@ def send(request):
 
 @login_required(login_url='login/')
 def redemption(request):
+	if request.method == 'POST':
+		return HttpResponse('not yet')
+	else:
+
 	this_user, this_employee = get_this_user_employee(request)
 
 	rdp_options = Redemption.objects.all()
