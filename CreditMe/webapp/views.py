@@ -57,7 +57,8 @@ def send(request):
 			trans_msg.save()
 			this_trans.message=trans_msg
 		this_trans.save()
-		return redirect('/send?done=True')
+		trans_status = True
+		return redirect('/send?done={}'.format(trans_status))
 
 	elif request.method == 'GET':
 
@@ -92,7 +93,9 @@ def redemption(request):
 			pub_date=timezone.now()
 			)
 		this_trans.save()
-		return redirect('/redemption?done=True')
+		
+	    trans_status = True
+		return redirect('/redemption?done={}'.format(trans_status))
 
 	elif request.method == 'GET':
 
@@ -106,4 +109,5 @@ def redemption(request):
 	        'datetime': timezone.now().date(),
 	        'rdp_options': rdp_options,
 	    }
+
 		return render(request, 'webapp/redemption.html', context)

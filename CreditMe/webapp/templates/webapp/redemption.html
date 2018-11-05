@@ -4,10 +4,14 @@
 <h3>Today is: {{ datetime }}</h3>
 <div class="row">
 	{% include 'webapp/profile.html' %}
-	{% if request.GET.done %}
-	<h1>Success!</h1>
-	{% endif %}
 	<div class="col-md-8">
+		{% if request.GET.done %}
+			{% if request.GET.done == "True" %}
+				Success!
+			{% elif request.GET.done == "False" %}
+				Failed!
+			{% endif %}
+		{% endif %}
 		<form action="/redemption/" method="POST" enctype="multipart/form-data">
 			{% csrf_token %} 
 		  <div class="form-group row">
