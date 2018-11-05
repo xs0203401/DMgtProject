@@ -9,14 +9,11 @@ import datetime
 @login_required(login_url='login/')
 def index(request):
 	this_user = request.user
-	print(this_user.id)
-	print(this_user)
 	this_employee = Employee.objects.get(user_id=this_user)
-	print(this_employee.first_name)
 
 	context = {
-        # 'question': question,
-        # 'error_message': "You didn't select a choice.",
+        'user': this_user,
+        'employee': this_employee,
     }
-	return render(request, 'webapp/home.html')
+	return render(request, 'webapp/home.html', context)
 
