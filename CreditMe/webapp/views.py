@@ -12,8 +12,8 @@ def index(request):
 	# this_employee = 
 
 	context = {
-        'question': question,
-        'error_message': "You didn't select a choice.",
+        # 'question': question,
+        # 'error_message': "You didn't select a choice.",
     }
 	return render(request, 'webapp/home.html')
 
