@@ -10,6 +10,7 @@ import datetime
 def index(request):
 	this_user = request.user
 	print(this_user.id)
+	print(this_user)
 	# this_employee = Employee.
 
 	context = {
