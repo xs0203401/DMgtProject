@@ -9,8 +9,3 @@ import datetime
 def index(request):
 	return render(request, 'webapp/home.html')
 
-# def login(request):
-# 	if request.user.is_authenticated:
-# 		return redirect('/')
-# 	else:
-# 		return render(request, 'registration/login.html')
