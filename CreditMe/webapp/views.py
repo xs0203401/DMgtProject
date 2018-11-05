@@ -17,8 +17,7 @@ def index(request):
 	context = {
         'user': this_user,
         'employee': this_employee,
-        'datetime': datetime.now(),
-        'timezoned': timezone.now(),
+        'datetime': timezone.now().date(),
     }
 	return render(request, 'webapp/home.html', context)
 
