@@ -9,8 +9,10 @@ class Employee(models.Model):
     email = models.EmailField()
     point_recd = models.IntegerField(default=0)
     point_tosd = models.IntegerField(default=1000)
-    username = models.CharField(max_length=16)
-    password = models.CharField(max_length=128)
+    user_id = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
 
 class Redemption(models.Model):
 	point_price = models.IntegerField(default=100)
