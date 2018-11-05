@@ -93,8 +93,8 @@ def redemption(request):
 			pub_date=timezone.now()
 			)
 		this_trans.save()
-		
-	    trans_status = True
+
+		trans_status = True
 		return redirect('/redemption?done={}'.format(trans_status))
 
 	elif request.method == 'GET':
