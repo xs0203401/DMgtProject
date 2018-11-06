@@ -132,12 +132,12 @@ def redemption(request):
 		try:
 			rdp_item = Redemption.objects.get(pk=int(request.POST['rdp_id']))
 		except:
-			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/redemption?status={}'.format(TRANS_STATUS['ILLEGAL']))
 		trans_points = rdp_item.point_price
 
 		# check if point sufficient
 		if this_employee.point_recd <= trans_points:
-			return redirect('/send?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
+			return redirect('/redemption?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
 
 		# transaction is legal
 		# Record transaction
