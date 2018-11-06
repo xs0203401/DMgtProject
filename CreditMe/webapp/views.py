@@ -58,7 +58,6 @@ def send(request):
 			trans_points = int(request.POST['points'])
 		except:
 			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
-
 		if trans_points <= 0:
 			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
 
@@ -76,11 +75,18 @@ def send(request):
 			)
 
 		# if there is message information save message
-		if request.POST['msg_title']!='' or request.POST['msg_content']!='':
+
+		message_title = str(request.POST['msg_title'])
+		message_content = str(request.POST['msg_content'])
+		# check len
+		if (len(message_content)>240 or len(message_title)>80):
+			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+		if (message_title!='' or message_content!=''):
+
 			# create and save message
 			trans_msg = Message(
-				title = str(request.POST['msg_title']),
-				content = str(request.POST['msg_content'])
+				title = message_title,
+				content = message_content
 				)
 			trans_msg.save()
 			# key transaction
