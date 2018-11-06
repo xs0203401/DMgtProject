@@ -5,11 +5,13 @@
 <div class="row">
 	{% include 'webapp/profile.html' %}
 	<div class="col-md-8">
-		{% if request.GET.done %}
-			{% if request.GET.done == "True" %}
+		{% if request.GET.status %}
+			{% if request.GET.status == "0" %}
 				Success!
-			{% elif request.GET.done == "False" %}
-				Failed!
+			{% elif request.GET.status == "1" %}
+				Failed! Illegal form!
+			{% elif request.GET.status == "2" %}
+				Insufficient points!
 			{% endif %}
 		{% endif %}
 		<form action="/redemption/" method="POST" enctype="multipart/form-data">
