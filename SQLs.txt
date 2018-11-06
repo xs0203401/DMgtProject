@@ -25,3 +25,12 @@ ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_rdm_ID_id_3e
 ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_rec_ID_id_7f42fbdf_fk_webapp_employee_id` FOREIGN KEY (`rec_ID_id`) REFERENCES `webapp_employee` (`id`);
 ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_send_ID_id_9cb5145d_fk_webapp_employee_id` FOREIGN KEY (`send_ID_id`) REFERENCES `webapp_employee` (`id`);
 COMMIT;
+
+BEGIN;
+--
+-- Alter field message on transaction
+--
+ALTER TABLE `webapp_transaction` DROP FOREIGN KEY `webapp_transaction_message_id_e1a9d662_fk_webapp_message_id`;
+ALTER TABLE `webapp_transaction` MODIFY `message_id` integer NULL;
+ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_message_id_e1a9d662_fk_webapp_message_id` FOREIGN KEY (`message_id`) REFERENCES `webapp_message` (`id`);
+COMMIT;
