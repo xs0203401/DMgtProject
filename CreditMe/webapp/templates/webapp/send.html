@@ -7,11 +7,26 @@
 	<div class="col-md-8">
 		{% if request.GET.status %}
 			{% if request.GET.status == "0" %}
-				Success!
+			<div class="alert alert-success alert-dismissible fade show" role="alert">
+				<strong>Success!</strong>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 			{% elif request.GET.status == "1" %}
-				Failed! Illegal form!
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Failed! Illegal input!</strong> You should check in on some of those fields below.
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 			{% elif request.GET.status == "2" %}
-				Insufficient points!
+			<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				<strong>Failed! Insufficient points!!</strong>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
 			{% endif %}
 		{% endif %}
 		<form action="/send/" method="POST" enctype="multipart/form-data">
