@@ -34,3 +34,11 @@ ALTER TABLE `webapp_transaction` DROP FOREIGN KEY `webapp_transaction_message_id
 ALTER TABLE `webapp_transaction` MODIFY `message_id` integer NULL;
 ALTER TABLE `webapp_transaction` ADD CONSTRAINT `webapp_transaction_message_id_e1a9d662_fk_webapp_message_id` FOREIGN KEY (`message_id`) REFERENCES `webapp_message` (`id`);
 COMMIT;
+BEGIN;
+
+
+--
+-- Create model Report
+--
+CREATE TABLE `webapp_report` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `title` varchar(100) NOT NULL, `sql_string` varchar(2048) NOT NULL);
+COMMIT;
