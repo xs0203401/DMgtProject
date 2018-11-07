@@ -23,14 +23,14 @@
             <li class="nav-item">
                 <a href="/redemption" class="nav-link">Redeem!</a>
             </li>
-            {% if user %}
+            {% if user and report_list %}
                 {% if user.username == "DMgt2019" %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Reports</a>
                     <div class="dropdown-menu" aria-labelledby="navdrop">
-                        <a href="#" class="dropdown-item">Service1</a>
-                        <a href="#" class="dropdown-item">Service2</a>
-                        <a href="#" class="dropdown-item">Service3</a>
+                        {% for r in report_list %}
+                        <a href="/report/{{r.id}}" class="dropdown-item">Report {{r.id}}</a>
+                        {% endfor %}
                     </div>
                 </li>
                 {% endif %}

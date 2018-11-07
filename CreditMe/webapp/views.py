@@ -1,11 +1,11 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.utils import timezone
 from django.db.models import Q
 
-from .models import Employee, Redemption, Message, Transaction
+from .models import Employee, Redemption, Message, Transaction, Report
 from django.contrib.auth.models import User
 
 from datetime import datetime, timedelta
@@ -31,6 +31,11 @@ def logout_view(request):
     return redirect('/')
 
 @login_required(login_url='/login/')
+def report(request):
+	this_report = get_object_or_404(Report, pk=report_id)
+	return HttpResponse(this_report.sql_string)
+
+@login_required(login_url='/login/')
 def index(request):
 	this_user, this_employee = get_this_user_employee(request)
 
@@ -40,16 +45,20 @@ def index(request):
 		).order_by('-pub_date')
 
 	# if system, return all recent month transactions
-	# System user id = 1
 	if this_user.id == 1:
 		transac_list = Transaction.objects.filter(
 			pub_date__gt=(timezone.now()-timedelta(days=30))
 			).all()
+		# also retrieve reports
+		report_list = Report.objects.all()
+	else:
+		report_list = None
 
 	context = {
         'user': this_user,
         'employee': this_employee,
         'datetime': timezone.now().date(),
+        'report_list': report_list,
         'transac_list':transac_list,
     }
 	return render(request, 'webapp/home.html', context)

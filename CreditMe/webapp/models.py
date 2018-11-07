@@ -31,3 +31,6 @@ class Transaction(models.Model):
 	rdm_ID = models.ForeignKey(Redemption, on_delete=models.CASCADE, blank=True, null=True)
 	pub_date = models.DateTimeField('transaction date stamp')
 
+class Report(models.Model):
+	title = models.CharField(max_length=100)
+	sql_string = models.CharField(default='select 0')
