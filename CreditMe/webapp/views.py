@@ -141,7 +141,7 @@ def send(request):
 		send_employee = Employee.objects.get(user_id=this_user)
 		try:
 			rec_user_id = int(request.POST['rec_user'])
-			if rec_user_id = 6:
+			if rec_user_id == 6:
 				return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
 			rec_user = User.objects.get(pk=rec_user_id)
 			rec_employee = Employee.objects.get(user_id=rec_user)
