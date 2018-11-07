@@ -6,13 +6,13 @@ from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 import random
 
-def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300):
+def generate_data(n=20, num_month=1, num_month_ago=0, s_r_percent=0.80, point_per=0.3):
 	'''
 	n = rows of data
-	num_month = number of month(s) in range
+	num_month = number of month(s) in range (default = 1)
 	num_month_ago = start from when
-	percent = percent of sending (vs. redemption)
-	point_range = the random range of points
+	s_r_percent = percent of sending (vs. redemption)
+	point_per = the random range of points
 
 	this generator does not change points in employees' accounts
 	'''
@@ -20,13 +20,17 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300
 	num_month_ago=int(num_month_ago)
 	employees = Employee.objects.exclude(pk=6).all()
 	rdm_s = Redemption.objects.all()
+	sys_employee = Employee.objects.get(pk=6)
 	
 	for _ in range(n):
-		if random.random()<percent:
+		if random.random()<s_r_percent:
+			e_rec = employees[int(random.random()*len(employees))]
+			e_send = employees[int(random.random()*len(employees))]
+
 			this_trans = Transaction(
-				rec_ID = employees[int(random.random()*len(employees))],
-				send_ID = employees[int(random.random()*len(employees))],
-				points = int(random.random()*point_range+1),
+				rec_ID = e_rec,
+				send_ID = e_send,
+				points = int(random.random()*e_send.point_tosd*point_per+1),
 				pub_date = timezone.now()-timedelta(days=int(random.random()*30*num_month+1+30*num_month_ago))
 				)
 			rnd_msg = Message(
@@ -34,6 +38,10 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300
 				content = 'Generated at: {}'.format(timezone.now())
 				)
 			rnd_msg.save()
+			e_rec.point_recd += this_trans.points
+			e_rec.save()
+			e_send.point_tosd -= this_trans.points
+			e_send.save()
 			this_trans.message=rnd_msg
 			this_trans.save()
 			print(
@@ -43,9 +51,10 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300
 				this_trans.message.content
 			)
 		else:
+			e_send = employees[int(random.random()*len(employees))]
 			this_trans = Transaction(
-				rec_ID = employees[int(random.random()*len(employees))],
-				send_ID = employees[int(random.random()*len(employees))],
+				rec_ID = sys_employee,
+				send_ID = e_send,
 				pub_date = timezone.now()-timedelta(days=int(random.random()*30*num_month+1+30*num_month_ago))
 				)
 			this_rdm = rdm_s[int(random.random()*len(rdm_s))]
@@ -56,6 +65,8 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300
 				content = 'Generated at: {}'.format(timezone.now())
 				)
 			rnd_msg.save()
+			e_send.point_tosd -= this_trans.points
+			e_send.save()
 			this_trans.message=rnd_msg
 			this_trans.save()
 			print(
