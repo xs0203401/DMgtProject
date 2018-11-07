@@ -42,3 +42,5 @@ BEGIN;
 --
 CREATE TABLE `webapp_report` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, `title` varchar(100) NOT NULL, `sql_string` varchar(2048) NOT NULL);
 COMMIT;
+
+
