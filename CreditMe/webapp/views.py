@@ -43,7 +43,20 @@ def reset(request):
 		return redirect('/')
 	
 	else:
+		reset_msg = Message(
+			title = 'Reset Operation',
+			content = 'Reset Operation'
+			)
+		reset_msg.save()
 		for e in Employee.objects.exclude(pk=6).all():
+			this_trans=Transaction(
+				rec_ID=e,
+				send_ID=request.user,
+				points=1000-int(e.point_tosd),
+				message=reset_msg,
+				pub_date=timezone.now()
+			)
+			this_trans.save()
 			e.point_tosd = 1000
 			e.save()
 		return redirect('/?status={}'.format(TRANS_STATUS['SUCCESS']))
@@ -127,7 +140,10 @@ def send(request):
 		this_user = request.user
 		send_employee = Employee.objects.get(user_id=this_user)
 		try:
-			rec_user = User.objects.get(pk=int(request.POST['rec_user']))
+			rec_user_id = int(request.POST['rec_user'])
+			if rec_user_id = 6:
+				return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			rec_user = User.objects.get(pk=rec_user_id)
 			rec_employee = Employee.objects.get(user_id=rec_user)
 		except:
 			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
