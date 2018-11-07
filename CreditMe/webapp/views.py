@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.utils import timezone
 from django.db.models import Q
+from django.db import connection
 
 from .models import Employee, Redemption, Message, Transaction, Report
 from django.contrib.auth.models import User
@@ -34,13 +35,33 @@ def logout_view(request):
 @login_required(login_url='/login/')
 def report(request, report_id):
 	this_report = get_object_or_404(Report, pk=report_id)
-	sql_s = str(this_report.sql_string).upper()
+	
+	# set sql string to all lower
+	# NEED to be tested!
+	# sql_s = str(this_report.sql_string).lower()
+	sql_s = str(this_report.sql_string)
+	
+	# try to get report column names,
+	# otherwise, no header
 	try:
-		# try to get report column names
-		report_cols = [i.strip() for i in re.findall(r'SELECT(.*)FROM',sql_s)[0].split(',')]
+		report_cols = [i.strip() for i in re.findall(r'select (.*) from',sql_s)[0].split(',')]
 	except:
 		report_cols = None
-	return HttpResponse(report_cols)
+
+	# execute query
+	with connection.cursor() as csr:
+		csr.execute(sql_s)
+		query_result = csr.fetchall()
+
+	context = {
+        'user': this_user,
+        'employee': this_employee,
+        'datetime': timezone.now().date(),
+        'report_list': report_list,
+        'report_header': report_cols,
+        'report_content':query_result,
+    }
+	return render(request, 'webapp/report.html', context)
 
 @login_required(login_url='/login/')
 def index(request):

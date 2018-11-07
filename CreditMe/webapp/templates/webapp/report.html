@@ -1,0 +1,33 @@
+{% extends "webapp/BASE.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<h3>Today is: {{ datetime }}</h3>
+{% include 'webapp/profile.html' %}
+<div class="container">
+	{% if user.id == 1 %}
+	<h3 class="float-right"> Recent 30-days Trsanctions</h3>
+	{% else %}
+	<h3 class="float-right">My Transactions</h3>
+	{% endif %}
+	<table class="table table-hover">
+		{% if report_header is not None %}
+		<thead class="thead-light">
+			<tr>
+				{% for c in report_header %}
+				<th scope="col">{{c}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<% endif %>
+		<tbody>
+		{% for row in report_content %}
+			<tr>
+				{% for cell in row %}
+				<td>{{cell}}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}
