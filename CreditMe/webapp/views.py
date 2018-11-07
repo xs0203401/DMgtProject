@@ -43,6 +43,7 @@ def reset(request):
 		return redirect('/')
 	
 	else:
+		sys_employee = Employee.objects.get(user_id=request.user)
 		reset_msg = Message(
 			title = 'Reset Operation',
 			content = 'Reset Operation'
@@ -51,7 +52,7 @@ def reset(request):
 		for e in Employee.objects.exclude(pk=6).all():
 			this_trans=Transaction(
 				rec_ID=e,
-				send_ID=request.user,
+				send_ID=sys_employee,
 				points=1000-int(e.point_tosd),
 				message=reset_msg,
 				pub_date=timezone.now()
