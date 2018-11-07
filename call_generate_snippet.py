@@ -1,3 +1,4 @@
+es=Employee.objects.exclude(pk=6)
 for i in range(8,-1,-1):
   for e in es:
     e.point_tosd=1000
