@@ -33,7 +33,7 @@ def index(request):
 	# get all transactions with this employee
 	transac_list = Transaction.objects.filter(
 		Q(send_ID=this_employee)|Q(rec_ID=this_employee)
-		)
+		).order_by('-pub_date')
 
 	context = {
         'user': this_user,
