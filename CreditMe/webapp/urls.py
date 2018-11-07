@@ -8,6 +8,7 @@ urlpatterns = [
 	path('send/', views.send, name='send'),
 	path('redemption/', views.redemption, name='redemption'),
 	path('report/<int:report_id>', views.report, name='report_page'),
+	path('reset/', views.reset, name='reset'),
 	path('login/', auth_views.LoginView.as_view()),
 	path('logout/', views.logout_view, name='logout'),
 ]
