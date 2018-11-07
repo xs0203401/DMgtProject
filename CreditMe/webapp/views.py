@@ -149,7 +149,7 @@ def redemption(request):
 		trans_points = rdp_item.point_price
 
 		# check if point sufficient
-		if this_employee.point_recd <= trans_points:
+		if this_employee.point_recd < trans_points:
 			return redirect('/redemption?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
 
 		# transaction is legal
