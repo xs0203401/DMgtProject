@@ -47,16 +47,17 @@ def report(request, report_id):
 	
 	# try to get report column names,
 	# otherwise, no header
-	try:
-		report_cols = [i.strip() for i in re.findall(r'select (.*) from',sql_s)[0].split(',')]
-		print(report_cols)
-	except:
-		report_cols = None
+	# try:
+	# 	report_cols = [i.strip() for i in re.findall(r'select(.*)from',sql_s)[0].split(',')]
+	# 	print(report_cols)
+	# except:
+	# 	report_cols = None
 
 	# execute query
 	with connection.cursor() as csr:
 		csr.execute(sql_s)
 		query_result = csr.fetchall()
+		report_cols = [dcp[0] for dcp in csr.description]
 
 	context = {
         'user': this_user,

@@ -29,7 +29,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Reports</a>
                     <div class="dropdown-menu" aria-labelledby="navdrop">
                         {% for r in report_list %}
-                        <a href="/report/{{r.id}}" class="dropdown-item">Report {{r.id}}</a>
+                        <a href="/report/{{r.id}}" class="dropdown-item">Report - {{r.title}}</a>
                         {% endfor %}
                     </div>
                 </li>
