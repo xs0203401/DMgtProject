@@ -8,13 +8,17 @@ from django.db.models import Q
 from .models import Employee, Redemption, Message, Transaction
 from django.contrib.auth.models import User
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 TRANS_STATUS={
 	'SUCCESS':0,
 	'ILLEGAL':1,
 	'INSUFFICIENT':2
 }
+
+
+# System user id = 1
+# System employee id = 6
 
 def get_this_user_employee(request):
 	this_user = request.user
@@ -34,6 +38,13 @@ def index(request):
 	transac_list = Transaction.objects.filter(
 		Q(send_ID=this_employee)|Q(rec_ID=this_employee)
 		).order_by('-pub_date')
+
+	# if system, return all recent month transactions
+	# System user id = 1
+	if this_user.id = 1:
+		transac_list = Transaction.objects.filter(
+			pub_date__gt=(timezone.now()-timedelta(days=30))
+			).all()
 
 	context = {
         'user': this_user,
