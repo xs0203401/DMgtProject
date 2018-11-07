@@ -14,16 +14,6 @@
 {% endif %}
 {% include 'webapp/profile.html' %}
 <div class="container">
-	{% if request.GET.status %}
-		{% if request.GET.status == "0" %}
-		<div class="alert alert-success alert-dismissible fade show" role="alert">
-			<strong>Month point reset finished!</strong>
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-		{% endif %}
-	{% endif %}
 	{% if user.id == 1 %}
 	<h3 class="float-right"> Recent 30-days Trsanctions</h3>
 	{% else %}
