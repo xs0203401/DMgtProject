@@ -41,7 +41,7 @@
 		    <label for="rec_user">Select Receiver</label>
 		    <select class="form-control" id="rec_user" name="rec_user">
 	            {% for e in employees %}
-	            <option value="{{ e.user_id.id }}">{{ e.first_name }} {{ e.last_name }}</option>
+	            <option value="{{ e.id }}">{{ e.first_name }} {{ e.last_name }}</option>
 	            {% endfor %}
 		    </select>
 		  </div>
