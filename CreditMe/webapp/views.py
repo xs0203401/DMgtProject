@@ -113,9 +113,9 @@ def index(request):
 	if this_user.id == 1:
 		transac_list = Transaction.objects.filter(
 			pub_date__gt=(timezone.now()-timedelta(days=30))
-			).all()
+			).all().order_by('-pub_date')
 		# also retrieve reports
-		report_list = Report.objects.all().order_by('-pub_date')
+		report_list = Report.objects.all()
 	else:
 		report_list = None
 
