@@ -43,11 +43,13 @@ def report(request, report_id):
 	# NEED to be tested!
 	# sql_s = str(this_report.sql_string).lower()
 	sql_s = str(this_report.sql_string)
+	print("SQL:",sql_s)
 	
 	# try to get report column names,
 	# otherwise, no header
 	try:
 		report_cols = [i.strip() for i in re.findall(r'select (.*) from',sql_s)[0].split(',')]
+		print(report_cols)
 	except:
 		report_cols = None
 
