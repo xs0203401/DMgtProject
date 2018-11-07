@@ -69,7 +69,7 @@ def send(request):
 			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
 
 		# check if point sufficient
-		if send_employee.point_tosd <= trans_points:
+		if send_employee.point_tosd < trans_points:
 			return redirect('/send?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
 
 		# transaction is legal
