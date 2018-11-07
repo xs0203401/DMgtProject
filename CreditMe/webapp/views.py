@@ -34,9 +34,13 @@ def logout_view(request):
 @login_required(login_url='/login/')
 def report(request, report_id):
 	this_report = get_object_or_404(Report, pk=report_id)
-	sql_s = str(this_report.sql_string)
-	report_attrs = [i.strip() for i in re.findall(r'select(.*)from',sql_s)[0].split(',')]
-	return HttpResponse(report_attrs)
+	sql_s = str(this_report.sql_string).upper()
+	try:
+		# try to get report column names
+		report_cols = [i.strip() for i in re.findall(r'SELECT(.*)FROM',sql_s)[0].split(',')]
+	except:
+		report_cols = None
+	return HttpResponse(cols)
 
 @login_required(login_url='/login/')
 def index(request):
