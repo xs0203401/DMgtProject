@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.utils import timezone
+from django.db.models import Q
 
 from .models import Employee, Redemption, Message, Transaction
 from django.contrib.auth.models import User
@@ -29,10 +30,16 @@ def logout_view(request):
 def index(request):
 	this_user, this_employee = get_this_user_employee(request)
 
+	# get all transactions with this employee
+	transac_list = Transaction.objects.filter(
+		Q(send_ID=this_employee)|Q(rec_ID=this_employee)
+		)
+
 	context = {
         'user': this_user,
         'employee': this_employee,
         'datetime': timezone.now().date(),
+        'transac_list':transac_list,
     }
 	return render(request, 'webapp/home.html', context)
 

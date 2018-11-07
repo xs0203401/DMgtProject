@@ -9,29 +9,26 @@
 		<thead>
 			<tr>
 				<th scope="col">#</th>
-				<th scope="col">First</th>
-				<th scope="col">Last</th>
-				<th scope="col">Handle</th>
+				<th scope="col">rec_ID</th>
+				<th scope="col">send_ID</th>
+				<th scope="col">points</th>
+				<th scope="col">message</th>
+				<th scope="col">rdm_ID</th>
+				<th scope="col">pub_date</th>
 			</tr>
 		</thead>
 		<tbody>
+		{% for t in transac_list %}
 			<tr>
-				<th scope="row">1</th>
-				<td>Mark</td>
-				<td>Otto</td>
-				<td>@mdo</td>
+				<th scope="row">{{ t.id }}</th>
+				<td>t.rec_ID</td>
+				<td>t.send_ID</td>
+				<td>t.points</td>
+				<td>t.message</td>
+				<td>t.rdm_ID</td>
+				<td>t.pub_date</td>
 			</tr>
-			<tr>
-				<th scope="row">2</th>
-				<td>Jacob</td>
-				<td>Thornton</td>
-				<td>@fat</td>
-			</tr>
-			<tr>
-				<th scope="row">3</th>
-				<td colspan="2">Larry the Bird</td>
-				<td>@twitter</td>
-			</tr>
+		{% endfor %}
 		</tbody>
 	</table>
 </div>
