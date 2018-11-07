@@ -2,6 +2,7 @@
 {% block title %}My Dashboard{% endblock %}
 {% block content %}
 <h3>Today is: {{ datetime }}</h3>
+<form method="POST" action="/reset/" enctype="multipart/form-data">{% csrf_token %}<button class="btn btn-outline-danger float-right">Reset this Month</button></form>
 <div class="container">
 	<h3> Report - {{report_title}}</h3>
 	<table class="table table-hover">
