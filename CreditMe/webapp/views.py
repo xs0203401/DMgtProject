@@ -33,6 +33,23 @@ def logout_view(request):
     return redirect('/')
 
 @login_required(login_url='/login/')
+def reset(request):
+	if request.method != 'POST':
+	# method has to be post
+		return redirect('/')
+
+	elif request.user.id != 1:
+	# user has to be system
+		return redirect('/')
+	
+	else:
+		for e in Employee.objects.exclude(pk=6).all():
+			e.point_tosd = 1000
+			e.save()
+		return redirect('/?status={}'.format(TRANS_STATUS['SUCCESS']))
+
+
+@login_required(login_url='/login/')
 def report(request, report_id):
 	# retrieve context data
 	this_user, this_employee = get_this_user_employee(request)
