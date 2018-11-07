@@ -64,6 +64,7 @@ def report(request, report_id):
         'employee': this_employee,
         'datetime': timezone.now().date(),
         'report_list': report_list,
+        'report_title': this_report.title,
         'report_header': report_cols,
         'report_content':query_result,
     }
