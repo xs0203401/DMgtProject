@@ -31,6 +31,7 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.68, point_range=500
 				title = 'Random giving',
 				content = 'Generated at: {}'.format(timezone.now())
 				)
+			rnd_msg.save()
 			this_trans.message=rnd_msg
 			this_trans.save()
 			print(
@@ -52,6 +53,7 @@ def generate_data(n, num_month=2, num_month_ago=0, percent=0.68, point_range=500
 				title = 'Random redemption',
 				content = 'Generated at: {}'.format(timezone.now())
 				)
+			rnd_msg.save()
 			this_trans.message=rnd_msg
 			this_trans.save()
 			print(
