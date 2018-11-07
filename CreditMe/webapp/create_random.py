@@ -9,14 +9,8 @@ from django.db import connection
 from .models import Employee, Redemption, Message, Transaction, Report
 from django.contrib.auth.models import User
 
-# import re
+import re
 from datetime import datetime, timedelta
-
-TRANS_STATUS={
-	'SUCCESS':0,
-	'ILLEGAL':1,
-	'INSUFFICIENT':2
-}
 
 
 # System user id = 1
@@ -64,6 +58,7 @@ def report(request, report_id):
         'employee': this_employee,
         'datetime': timezone.now().date(),
         'report_list': report_list,
+        'report_title': this_report.title,
         'report_header': report_cols,
         'report_content':query_result,
     }

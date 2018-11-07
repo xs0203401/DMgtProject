@@ -2,15 +2,10 @@
 {% block title %}My Dashboard{% endblock %}
 {% block content %}
 <h3>Today is: {{ datetime }}</h3>
-{% include 'webapp/profile.html' %}
+<!-- {% include 'webapp/profile.html' %} -->
 <div class="container">
-	{% if user.id == 1 %}
-	<h3 class="float-right"> Recent 30-days Trsanctions</h3>
-	{% else %}
-	<h3 class="float-right">My Transactions</h3>
-	{% endif %}
+	<h3> Report - {{report_title}}</h3>
 	<table class="table table-hover">
-		{% if report_header is not None %}
 		<thead class="thead-light">
 			<tr>
 				{% for c in report_header %}
@@ -18,7 +13,6 @@
 				{% endfor %}
 			</tr>
 		</thead>
-		{% endif %}
 		<tbody>
 		{% for row in report_content %}
 			<tr>
