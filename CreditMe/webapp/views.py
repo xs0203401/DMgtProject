@@ -34,7 +34,8 @@ def logout_view(request):
 @login_required(login_url='/login/')
 def report(request, report_id):
 	this_report = get_object_or_404(Report, pk=report_id)
-	report_attrs = [i.strip() for i in re.findall(str(this_report.sql_string),sql_s)[0].split(',')]
+	sql_s = str(this_report.sql_string)
+	report_attrs = [i.strip() for i in re.findall(r'select(.*)from',sql_s)[0].split(',')]
 	return HttpResponse(report_attrs)
 
 @login_required(login_url='/login/')
