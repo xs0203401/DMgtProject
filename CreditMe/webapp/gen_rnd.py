@@ -56,8 +56,8 @@ def generate_data(n=20, num_month=1, num_month_ago=0, s_r_percent=0.9, point_per
 				if rdm.point_price<e_send.point_recd:
 					this_rdm = rdm
 					break
-			if this_rdm is None: next
-			
+			if this_rdm is None: continue
+
 			this_trans = Transaction(
 				rec_ID = sys_employee,
 				send_ID = e_send,
