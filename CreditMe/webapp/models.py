@@ -33,4 +33,4 @@ class Transaction(models.Model):
 
 class Report(models.Model):
 	title = models.CharField(max_length=100)
-	sql_string = models.CharField(default='select 0')
+	sql_string = models.CharField(default='select 0', max_length=2048)
