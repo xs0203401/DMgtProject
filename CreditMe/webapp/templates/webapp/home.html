@@ -24,8 +24,16 @@
 				<td>{{t.rec_ID.first_name}} {{t.rec_ID.last_name}}</td>
 				<td>{{t.send_ID.first_name}} {{t.send_ID.last_name}}</td>
 				<td>{{t.points}}</td>
+				{% if t.message %}
 				<td><b>{{t.message.title}}</b>: {{t.message.content}}</td>
+				{% else %}
+				<td> - </td>
+				{% endif %}
+				{% if t.rdm_ID %}
 				<td>{{t.rdm_ID.title}}</td>
+				{% else %}
+				<td> - </td>
+				{% endif %}
 				<td>{{t.pub_date|date}}</td>
 			</tr>
 		{% endfor %}
