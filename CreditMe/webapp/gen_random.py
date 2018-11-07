@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from datetime import datetime, timedelta
 import random
 
-def generate_data(n, num_month=2, num_month_ago=0, percent=0.88, point_range=500):
+def generate_data(n, num_month=2, num_month_ago=0, percent=0.80, point_range=300):
 	'''
 	n = rows of data
 	num_month = number of month(s) in range
