@@ -17,22 +17,23 @@
             <li class="nav-item active">
                 <a href="/" class="nav-link">Dashboard</a>
             </li>
+            {% if user %}
+                {% if user.username == "DMgt2019" and report_list %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Reports</a>
+                <div class="dropdown-menu" aria-labelledby="navdrop">
+                    {% for r in report_list %}
+                    <a href="/report/{{r.id}}" class="dropdown-item">Report - {{r.title}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+                {% else %}
             <li class="nav-item">
                 <a href="/send" class="nav-link">SendPoints</a>
             </li>
             <li class="nav-item">
                 <a href="/redemption" class="nav-link">Redeem!</a>
             </li>
-            {% if user and report_list %}
-                {% if user.username == "DMgt2019" %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navdrop" role="button" data-toggle="dropdown" data-hover="dropdown">Reports</a>
-                    <div class="dropdown-menu" aria-labelledby="navdrop">
-                        {% for r in report_list %}
-                        <a href="/report/{{r.id}}" class="dropdown-item">Report - {{r.title}}</a>
-                        {% endfor %}
-                    </div>
-                </li>
                 {% endif %}
             {% endif %}
         </ul>
