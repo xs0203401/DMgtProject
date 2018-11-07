@@ -31,7 +31,7 @@ def logout_view(request):
     return redirect('/')
 
 @login_required(login_url='/login/')
-def report(request):
+def report(request, report_id):
 	this_report = get_object_or_404(Report, pk=report_id)
 	return HttpResponse(this_report.sql_string)
 
