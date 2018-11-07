@@ -74,7 +74,7 @@ def report(request, report_id):
 	# NEED to be tested!
 	# sql_s = str(this_report.sql_string).lower()
 	sql_s = str(this_report.sql_string)
-	print("SQL:",sql_s)
+	print("SQL execute:",sql_s)
 	
 	# try to get report column names,
 	# otherwise, no header
@@ -88,6 +88,7 @@ def report(request, report_id):
 	with connection.cursor() as csr:
 		csr.execute(sql_s)
 		query_result = csr.fetchall()
+		# print(query_result)
 		report_cols = [dcp[0] for dcp in csr.description]
 
 	context = {
@@ -95,6 +96,7 @@ def report(request, report_id):
         'employee': this_employee,
         'datetime': timezone.now().date(),
         'report_list': report_list,
+        'report_sql': sql_s,
         'report_title': this_report.title,
         'report_header': report_cols,
         'report_content':query_result,
