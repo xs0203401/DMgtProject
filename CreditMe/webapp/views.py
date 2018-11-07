@@ -40,7 +40,7 @@ def report(request, report_id):
 		report_cols = [i.strip() for i in re.findall(r'SELECT(.*)FROM',sql_s)[0].split(',')]
 	except:
 		report_cols = None
-	return HttpResponse(cols)
+	return HttpResponse(report_cols)
 
 @login_required(login_url='/login/')
 def index(request):
