@@ -41,7 +41,7 @@ def index(request):
 
 	# if system, return all recent month transactions
 	# System user id = 1
-	if this_user.id = 1:
+	if this_user.id == 1:
 		transac_list = Transaction.objects.filter(
 			pub_date__gt=(timezone.now()-timedelta(days=30))
 			).all()
