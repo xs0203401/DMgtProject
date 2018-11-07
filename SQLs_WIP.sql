@@ -44,3 +44,11 @@ CREATE TABLE `webapp_report` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, 
 COMMIT;
 
 
+-- Report 1
+-- | id   | points | pub_date | message_id | rdm_ID_id | rec_ID_id | send_ID_id | id | first_name | last_name | email | point_recd | point_tosd | user_id_id |
+select month(t.pub_date) as month, e.first_name, e.last_name, sum(points) as total_given
+from webapp_transaction t, webapp_employee e 
+where e.id=t.rec_id_id
+and rdm_ID_id is null
+group by month(t.pub_date), e.first_name, e.last_name
+order by total_given desc;
