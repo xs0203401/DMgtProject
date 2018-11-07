@@ -26,10 +26,15 @@ def generate_data(n=20, num_month=1, num_month_ago=0, s_r_percent=0.9, point_per
 			e_rec = employees[int(random.random()*len(employees))]
 			e_send = employees[int(random.random()*len(employees))]
 
+			if e_send.point_tosd<=0:
+				e_send.point_tosd=0
+				e_send.save()
+				continue
+			
 			this_trans = Transaction(
 				rec_ID = e_rec,
 				send_ID = e_send,
-				points = int(random.random()*e_send.point_tosd*point_per),
+				points = int(random.random()*e_send.point_tosd*point_per)-1,
 				pub_date = timezone.now()-timedelta(days=int(random.random()*30*num_month+1+30*num_month_ago))
 				)
 			rnd_msg = Message(
