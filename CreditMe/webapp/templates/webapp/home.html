@@ -4,7 +4,7 @@
 <h3>Today is: {{ datetime }}</h3>
 {% include 'webapp/profile.html' %}
 <div class="container">
-	{% if user.id = 1 %}
+	{% if user.id == 1 %}
 	<h4> Recent 30-days Trsanctions:</h4>
 	{% else %}
 	<h4>My Transactions:</h4>
