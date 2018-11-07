@@ -21,12 +21,12 @@
 		{% for t in transac_list %}
 			<tr>
 				<th scope="row">{{ t.id }}</th>
-				<td>t.rec_ID</td>
-				<td>t.send_ID</td>
-				<td>t.points</td>
-				<td>t.message</td>
-				<td>t.rdm_ID</td>
-				<td>t.pub_date</td>
+				<td>{{t.rec_ID}}</td>
+				<td>{{t.send_ID}}</td>
+				<td>{{t.points}}</td>
+				<td>{{t.message}}</td>
+				<td>{{t.rdm_ID}}</td>
+				<td>{{t.pub_date|date}}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
