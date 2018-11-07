@@ -115,7 +115,7 @@ def index(request):
 			pub_date__gt=(timezone.now()-timedelta(days=30))
 			).all()
 		# also retrieve reports
-		report_list = Report.objects.all()
+		report_list = Report.objects.all().order_by('-pub_date')
 	else:
 		report_list = None
 
