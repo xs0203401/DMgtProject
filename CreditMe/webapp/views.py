@@ -34,6 +34,7 @@ def logout_view(request):
 
 @login_required(login_url='/login/')
 def report(request, report_id):
+	this_user, this_employee = get_this_user_employee(request)
 	this_report = get_object_or_404(Report, pk=report_id)
 	
 	# set sql string to all lower
