@@ -44,11 +44,72 @@ CREATE TABLE `webapp_report` (`id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY, 
 COMMIT;
 
 
--- Report 1
--- | id   | points | pub_date | message_id | rdm_ID_id | rec_ID_id | send_ID_id | id | first_name | last_name | email | point_recd | point_tosd | user_id_id |
-select month(t.pub_date) as month, e.first_name, e.last_name, sum(points) as total_given
+-- Since data are inserted into table by django framework, there is no sql queries records
+-- I used Django API shell to create model objects (insert rows):
+-- Ex. create new employee with foreign key on user 3
+>>> from webapp.models import *
+>>> u=User.objects.all()[3]
+>>> e=Employee(first_name='John',last_name='Johnson'=,email='jojohnson@creditme.com',user_id=u) 
+>>> # foreign key object is passed into method as object
+>>> # point_recd and point_tosd has default value so no need to specify
+>>> e=save()
+
+-- I wrote a random data generator to generate random date. Using:
+>>> import random
+>>> t=Transaction(...)# ... some operation with random ...
+>>> t.save()
+-- Most of them are legal but some of them are not logical because of offset month range (30 days interval)
+-- https://github.com/xs0203401/DMgtProject/blob/master/CreditMe/webapp/gen_rnd.py
+
+
+
+-- Report 1:
+-- Aggregate usage of points for giving, receiving, and redemption, 
+-- on monthly basis, also broken down by user, 
+-- ranked in order of the most points received to least.
+-- Since MySQL does NOT NOT NOT have outer join, 
+-- I wrote several back to back left join union as views to overcome the problem
+-- So I created views, and saved final sql_string for report retrieval (in the web):
+create or replace view total_given_by_month_emp as
+(select month(t.pub_date) as month, e.id as eid, e.first_name, e.last_name, sum(points) as total_given
+from webapp_transaction t, webapp_employee e 
+where e.id=t.send_id_id
+and t.rec_id_id!=6
+and t.send_id_id!=6
+and rdm_ID_id is null
+group by month(t.pub_date), e.id);
+create or replace view total_recd_by_month_emp as
+(select month(t.pub_date) as month, e.id as eid, e.first_name, e.last_name, sum(points) as total_recd
 from webapp_transaction t, webapp_employee e 
 where e.id=t.rec_id_id
+and t.rec_id_id!=6
+and t.send_id_id!=6
 and rdm_ID_id is null
-group by month(t.pub_date), e.first_name, e.last_name
-order by total_given desc;
+group by month(t.pub_date), e.id);
+create or replace view total_redeem_by_month_emp as
+(select month(t.pub_date) as month, e.id as eid, e.first_name, e.last_name, sum(points) as total_redeem
+from webapp_transaction t, webapp_employee e 
+where e.id=t.send_id_id
+and rdm_ID_id is not null
+group by month(t.pub_date), e.id);
+create or replace view outer_gv_rc as
+(select gv.eid, gv.month, gv.total_given, ifnull(rc.total_recd,0) total_recd
+from total_given_by_month_emp gv left join total_recd_by_month_emp rc 
+on gv.eid=rc.eid and gv.month=rc.month)
+union
+select rc.eid, rc.month, ifnull(gv.total_given,0) total_given, rc.total_recd
+from total_recd_by_month_emp rc left join total_given_by_month_emp gv
+on gv.eid=rc.eid and gv.month=rc.month;
+create or replace view outer_gvrc_rd as
+(select o.eid, o.month, o.total_given, o.total_recd, ifnull(rd.total_redeem,0) total_redeem
+from outer_gv_rc o left join total_redeem_by_month_emp rd 
+on o.eid=rd.eid and o.month=rd.month)
+union
+select rd.eid, rd.month, ifnull(o.total_given,0) total_given, ifnull(o.total_recd,0) total_recd, rd.total_redeem
+from total_redeem_by_month_emp rd left join outer_gv_rc o
+on o.eid=rd.eid and o.month=rd.month;
+-- final sql:
+select o.month, o.eid, e.first_name, e.last_name, e.email, o.total_given, o.total_recd, o.total_redeem
+from outer_gvrc_rd o, webapp_employee e
+where o.eid=e.id
+order by o.total_recd desc;

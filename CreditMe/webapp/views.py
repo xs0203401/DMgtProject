@@ -74,7 +74,7 @@ def report(request, report_id):
 	# NEED to be tested!
 	# sql_s = str(this_report.sql_string).lower()
 	sql_s = str(this_report.sql_string)
-	print("SQL execute:",sql_s)
+	# print("SQL execute:",sql_s)
 	
 	# try to get report column names,
 	# otherwise, no header
