@@ -144,25 +144,25 @@ def send(request):
 		send_employee = Employee.objects.get(user_id=this_user)
 		try:
 			rec_employee_id = int(request.POST['rec_user'])
-			if rec_employee_id == 6 or rec_employee_id== send_employee.id:
-				return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			if rec_employee_id == 6 or rec_employee_id == send_employee.id:
+				return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],"eid=sys or eid=self"))
 			# rec_user = User.objects.get(pk=rec_employee_id)
 			# rec_employee = Employee.objects.get(user_id=rec_user)
 			rec_employee = Employee.objects.get(pk=rec_employee_id)
 		except:
-			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],"pk out of range"))
 
 		# get transaction
 		try:
 			trans_points = int(request.POST['points'])
 		except:
-			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],"illegal points input"))
 		if trans_points <= 0:
-			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],"points <= 0"))
 
 		# check if point sufficient
 		if send_employee.point_tosd < trans_points:
-			return redirect('/send?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
+			return redirect('/send?status={}&r={}'.format(TRANS_STATUS['INSUFFICIENT'],"isufficient points"))
 
 		# transaction is legal
 		# Record transaction
@@ -179,7 +179,7 @@ def send(request):
 		message_content = str(request.POST['msg_content'])
 		# check len
 		if (len(message_content)>240 or len(message_title)>80):
-			return redirect('/send?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],'message too long'))
 		if (message_title!='' or message_content!=''):
 
 			# create and save message
@@ -237,12 +237,12 @@ def redemption(request):
 		try:
 			rdp_item = Redemption.objects.get(pk=int(request.POST['rdp_id']))
 		except:
-			return redirect('/redemption?status={}'.format(TRANS_STATUS['ILLEGAL']))
+			return redirect('/redemption?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],'Illegal rdp_id'))
 		trans_points = rdp_item.point_price
 
 		# check if point sufficient
 		if this_employee.point_recd < trans_points:
-			return redirect('/redemption?status={}'.format(TRANS_STATUS['INSUFFICIENT']))
+			return redirect('/redemption?status={}&r={}'.format(TRANS_STATUS['INSUFFICIENT'],'Insufficient points to redeem'))
 
 		# transaction is legal
 		# Record transaction
