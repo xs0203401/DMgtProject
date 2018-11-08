@@ -61,6 +61,47 @@ COMMIT;
 -- Most of them are legal but some of them are not logical because of offset month range (30 days interval)
 -- https://github.com/xs0203401/DMgtProject/blob/master/CreditMe/webapp/gen_rnd.py
 
+-- Trigger:
+-- This is a trigger checking legal trnsaction inserts
+DELIMITER //
+CREATE TRIGGER sanity_check_trans_before_insert BEFORE INSERT ON webapp_transaction FOR EACH ROW
+BEGIN 
+DECLARE pt_on_hand int;
+SELECT point_recd FROM webapp_employee WHERE id = new.send_id_id INTO pt_on_hand;
+IF pt_on_hand < new.points THEN 
+  signal sqlstate -20000 SET msgtext = 'insufficient points!';
+END IF;
+IF new.rec_ID_id == new.send_id_id THEN BEGIN
+IF new.rec_ID_id != 6 THEN 
+  signal sqlstate -20000 SET msgtext = 'cannot give yourself points!';
+end;
+END IF; 
+END IF;
+END; //
+DELIMITER ;
+-- This is a trigger helps clean message table after transactions deleted
+DELIMITER //
+CREATE TRIGGER trans_after_delete_del_msg
+AFTER DELETE ON webapp_transaction
+BEGIN
+IF old.message_id IS NOT NULL THEN 
+  DELETE FROM webapp_message WHERE id = old.message_id;
+END IF;
+END; //
+DELIMITER ;
+
+-- Procedure:
+DELIMITER //
+CREATE procedure InsertNewTransNoMsg (
+	IN Send_ID integer,
+	IN Rec_ID integer,
+	IN Points integer,
+	)
+BEGIN 
+   INSERT INTO webapp_transaction (points, send_ID_id, rec_ID_id) VALUES (Points, Send_ID, Rec_ID);
+END; //
+DELIMITER ;
+
 
 
 -- Report 1:
@@ -74,7 +115,7 @@ create or replace view total_given_by_month_emp as
 (select month(t.pub_date) as month, e.id as eid, e.first_name, e.last_name, sum(points) as total_given
 from webapp_transaction t, webapp_employee e 
 where e.id=t.send_id_id
-and t.rec_id_id!=6
+and t.rec_ID_id!=6
 and t.send_id_id!=6
 and rdm_ID_id is null
 group by month(t.pub_date), e.id);
@@ -82,7 +123,7 @@ create or replace view total_recd_by_month_emp as
 (select month(t.pub_date) as month, e.id as eid, e.first_name, e.last_name, sum(points) as total_recd
 from webapp_transaction t, webapp_employee e 
 where e.id=t.rec_id_id
-and t.rec_id_id!=6
+and t.rec_ID_id!=6
 and t.send_id_id!=6
 and rdm_ID_id is null
 group by month(t.pub_date), e.id);
@@ -113,3 +154,20 @@ select o.month, o.eid, e.first_name, e.last_name, e.email, o.total_given, o.tota
 from outer_gvrc_rd o, webapp_employee e
 where o.eid=e.id
 order by o.total_recd desc;
+
+-- Report 2:
+-- Show who is not giving all points for the current month:
+select e.id eid, e.first_name, e.last_name, e.email, sum(points) pt_gived_out
+from webapp_transaction t, webapp_employee e
+where t.send_id_id=e.id
+and month(pub_date)=month(now())
+and year(pub_date)=year(now())
+and rdm_ID_id is null
+and rec_ID_id!=6
+and send_id_id!=6
+group by send_id_id
+having sum(points)<1000;
+
+-- Report 3
+-- Show all redemptions by month by user, for previous two month
+select * from total_redeem_by_month_emp order by  month, eid;
