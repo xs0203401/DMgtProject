@@ -36,11 +36,11 @@ def logout_view(request):
 def reset(request):
 	if request.method != 'POST':
 	# method has to be post
-		return redirect('/')
+		return redirect('/?status={}'.format(TRANS_STATUS['ILLEGAL']))
 
 	elif request.user.id != 1:
 	# user has to be system
-		return redirect('/')
+		return redirect('/?status={}'.format(TRANS_STATUS['ILLEGAL']))
 	
 	else:
 		sys_employee = Employee.objects.get(user_id=request.user)
