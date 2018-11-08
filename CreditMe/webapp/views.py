@@ -143,8 +143,7 @@ def send(request):
 		this_user = request.user
 		send_employee = Employee.objects.get(user_id=this_user)
 		try:
-			rec_employee_id = int(request.POST['rec_employee'])
-			return HttpResponse(rec_employee_id)
+			rec_employee_id = int(request.POST['rec_employee_id'])
 			if rec_employee_id == 6 or rec_employee_id == send_employee.id:
 				return redirect('/send?status={}&r={}'.format(TRANS_STATUS['ILLEGAL'],"eid=sys or eid=self"))
 			# rec_user = User.objects.get(pk=rec_employee_id)
